@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, Checkbox, FormControlLabel, Box, Typography, Divider } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 
 const Login = () => {
+
+  const [email,setEmail] =useState('');
+
   return (
     <Box 
     display="flex" 
@@ -16,6 +19,7 @@ const Login = () => {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}
+
     >
       <Box 
         component="form" 

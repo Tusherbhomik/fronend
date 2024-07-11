@@ -5,63 +5,43 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 const Signup = () => {
 
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
 
 
-    // const handleSignUp = async (event) => {
 
-    //     // event.preventDefault();
-    //     console.log(firstName);
+    const handleSignUp = async (event) => {
 
-    //     // const response = await fetch('/auth/signup', {
-    //     //     method: 'POST',
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json'
-    //     //     },
-    //     //     body: JSON.stringify({ firstName,lastName,email,password })
-    //     // });
+        event.preventDefault();
+        console.log(firstName);
 
-    //     // if (response.ok) {
-    //     //     const data = await response.json();
-    //     //     const token = data.token;
-    //     //     console.log('JWT Token:', token);
+        const response = await fetch('http://localhost:8080/api/v1/registration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ firstName,lastName,email,password })
+            
+        });
 
-    //     //     // Store the token in localStorage (or sessionStorage)
-    //     //     localStorage.setItem('jwtToken', token);
-    //     //     // Redirect to login page or handle successful sign-up
-    //     // } else {
-    //     //     console.error('Sign-up failed');
-    //     // }
-    // };
+        if (response.ok) {
+            console.log("GGG");
+            const data = await response.json();
+            const token = data.token;
+            console.log('JWT Token:', token);
 
-    // const userData = {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     password,
-    // };
-    // try {
-    //     const response = await fetch('/api/signup', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(userData),
-    //     });
-    //     if (!response.ok) {
-    //         throw new Error('Signup failed');
-    //     }
-    //     const data = await response.json();
-    //     console.log('Signup successful:', data);
-    //     // Display success message to the user
-    //     // Optionally redirect the user
-    // }catch (error) {
-    //     console.error('Signup error:', error);
-    //     // Display error message to the user
-    //   }
-    // }
+            // Store the token in localStorage (or sessionStorage)
+            localStorage.setItem('jwtToken', token);
+            // Redirect to login page or handle successful sign-up
+        } else {
+            console.error('Sign-up failed');
+        }
+    };
+    
+    
 
     return (
         <Box
@@ -85,6 +65,7 @@ const Signup = () => {
                 bgcolor="white"
                 borderRadius={1}
                 boxShadow={3}
+                onSubmit={handleSignUp} // Form's onSubmit event
             >
                 <Typography variant="h5" mb={2}>
                     Sign Up
@@ -151,22 +132,18 @@ const Signup = () => {
                       }}
                 />
 
-                {/* <TextField
+                <TextField
                     label="Confirm Password"
                     margin="normal"
                     variant="outlined"
                     fullWidth
                     required
                     type="password"
-                /> */}
+                />
 
                 {/* Optional fields */}
 
                 <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }} 
-                onSubmit={async (event) => {
-                    console.log("Sign up pressed");
-                    // handleSignUp();
-                  }}
                 >
                     Sign Up
                 </Button>
