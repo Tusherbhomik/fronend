@@ -6,6 +6,38 @@ import GoogleIcon from '@mui/icons-material/Google';
 const Login = () => {
 
   const [email,setEmail] =useState('');
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    console.log("Login attempt with email:", email);
+
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const token = data.token;
+        console.log('JWT Token:', token);
+
+        // Store the token in localStorage
+        localStorage.setItem('jwtToken', token);
+
+        // Redirect or handle successful login
+      } else {
+        console.error('Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
 
   return (
     <Box 
@@ -30,6 +62,7 @@ const Login = () => {
         bgcolor="white" 
         borderRadius={1} 
         boxShadow={3}
+        onSubmit={handleLogin}
       >
         <Typography variant="h5" mb={2}>LOGIN</Typography>
         
