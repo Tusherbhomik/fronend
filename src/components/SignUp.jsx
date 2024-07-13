@@ -23,25 +23,19 @@ const Signup = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ firstName,lastName,email,password })
-            
+            body: JSON.stringify({ firstName, lastName, email, password })
+
         });
 
         if (response.ok) {
-            console.log("GGG");
-            const data = await response.json();
-            const token = data.token;
-            console.log('JWT Token:', token);
-
-            // Store the token in localStorage (or sessionStorage)
-            localStorage.setItem('jwtToken', token);
-            // Redirect to login page or handle successful sign-up
+            const message = await response.text(); // Parse the response body as text
+            console.log('Response message:', message);
         } else {
             console.error('Sign-up failed');
         }
     };
-    
-    
+
+
 
     return (
         <Box
@@ -81,10 +75,10 @@ const Signup = () => {
                     name="firstName" // Used for form submission
                     onChange={(event) => {
                         if (event.target.value.length > 2) {
-                          console.log('First Name updated:', event.target.value);
+                            console.log('First Name updated:', event.target.value);
                         }
                         setFirstName(event.target.value);
-                      }}
+                    }}
                 />
 
                 <TextField
@@ -98,8 +92,8 @@ const Signup = () => {
                     onChange={(event) => {
                         console.log(event.target.value);
                         setLastName(event.target.value);
-                      }}
-                    
+                    }}
+
                 />
 
                 <TextField
@@ -114,7 +108,7 @@ const Signup = () => {
                     onChange={(event) => {
                         console.log(event.target.value);
                         setEmail(event.target.value);
-                      }}
+                    }}
                 />
 
                 <TextField
@@ -129,25 +123,25 @@ const Signup = () => {
                     onChange={(event) => {
                         console.log(event.target.value);
                         setPassword(event.target.value);
-                      }}
+                    }}
                 />
 
-                <TextField
+                {/* <TextField
                     label="Confirm Password"
                     margin="normal"
                     variant="outlined"
                     fullWidth
                     required
                     type="password"
-                />
+                /> */}
 
                 {/* Optional fields */}
 
-                <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }} 
+                <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}
                 >
                     Sign Up
                 </Button>
-                
+
 
                 {/* Social login buttons (optional) */}
                 {/* ... */}
